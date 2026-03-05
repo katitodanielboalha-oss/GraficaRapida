@@ -1,0 +1,2895 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>Gráfica Rápida - Soluções Gráficas Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET E CONFIGURAÇÕES GLOBAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #E31B23;
+            --primary-dark: #B22222;
+            --primary-light: #FF6B6B;
+            --secondary: #1A1E2C;
+            --secondary-light: #2A2F3F;
+            --accent: #FFD700;
+            --dark: #0B0D14;
+            --white: #FFFFFF;
+            --gray: #6C757D;
+            --light-gray: #F8F9FA;
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 6px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 15px 30px rgba(0,0,0,0.15);
+            --shadow-xl: 0 25px 50px rgba(0,0,0,0.2);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: 'typs poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 32px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-4px);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: var(--white);
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            color: var(--secondary);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-full);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: var(--white);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: var(--shadow-xl);
+            z-index: 9999;
+            transition: var(--transition);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 40px rgba(37, 211, 102, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* HEADER E NAVEGAÇÃO PREMIUM */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        /* LOGO - AGORA COMO IMAGEM */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-image {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--secondary), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+        }
+
+        /* MENU PRINCIPAL */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--secondary);
+            padding: 8px 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-link i {
+            font-size: 0.85rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* INDICADOR DE LINK ATIVO */
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* MEGA MENU - TODOS OS SERVIÇOS */
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: -300px;
+            width: 950px;
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            padding: 35px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 1000;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-item:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .mega-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .mega-menu-column h4 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mega-menu-column h4 i {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .mega-menu-links {
+            list-style: none;
+        }
+
+        .mega-menu-links li {
+            margin-bottom: 12px;
+        }
+
+        .mega-menu-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .mega-menu-links a:hover {
+            background: rgba(227, 27, 35, 0.08);
+            color: var(--primary);
+            transform: translateX(8px);
+        }
+
+        .mega-menu-links i {
+            width: 20px;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .menu-badge {
+            background: var(--primary);
+            color: white !important;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: var(--radius-full);
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        /* MEGA MENU - SERVIÇOS PREMIUM */
+        .mega-menu-premium {
+            position: absolute;
+            top: 100%;
+            left: -100px;
+            width: 600px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            padding: 35px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 1000;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .nav-item:hover .mega-menu-premium {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .mega-menu-premium .mega-menu-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .mega-menu-premium .mega-menu-column h4 {
+            color: var(--accent);
+            border-bottom-color: rgba(255,215,0,0.3);
+        }
+
+        .mega-menu-premium .mega-menu-column h4 i {
+            color: var(--accent);
+        }
+
+        .mega-menu-premium .mega-menu-links a {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .mega-menu-premium .mega-menu-links a:hover {
+            background: rgba(255,215,0,0.2);
+            color: var(--accent);
+        }
+
+        .mega-menu-premium .menu-badge {
+            background: var(--accent);
+            color: var(--dark) !important;
+        }
+
+        /* BOTÕES CTA */
+        .nav-cta {
+            display: flex;
+            gap: 15px;
+            margin-left: 20px;
+        }
+
+        .btn-nav {
+            padding: 10px 24px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .btn-nav-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-nav-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* MOBILE MENU */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--secondary);
+            cursor: pointer;
+            padding: 8px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--primary);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--white);
+            z-index: 2000;
+            transition: var(--transition);
+            padding: 100px 30px 40px;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .mobile-nav.active {
+            left: 0;
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 30px;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+        }
+
+        .mobile-nav-links > li {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 20px;
+        }
+
+        .mobile-nav-links .nav-link {
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-submenu {
+            margin-top: 15px;
+            margin-left: 20px;
+            display: none;
+        }
+
+        .mobile-submenu.active {
+            display: block;
+        }
+
+        .mobile-submenu li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-submenu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            background: var(--light-gray);
+            border-radius: var(--radius-lg);
+            font-weight: 500;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .mobile-submenu a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .mobile-nav-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* HERO SECTION COM CAROUSEL */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-top: 100px;
+            overflow: hidden;
+        }
+
+        .hero-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .carousel-track {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26,30,44,0.95) 0%, rgba(26,30,44,0.8) 50%, rgba(227,27,35,0.3) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+            max-width: 800px;
+            padding: 0 24px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s 0.3s forwards;
+        }
+
+        .hero-title small {
+            font-size: 2rem;
+            display: block;
+            color: var(--primary-light);
+            margin-top: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s 0.6s forwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s 0.9s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CAROUSEL NAVIGATION */
+        .carousel-arrows {
+            position: absolute;
+            top: 50%;
+            left: 30px;
+            right: 30px;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .carousel-arrow {
+            width: 55px;
+            height: 55px;
+            border-radius: var(--radius-full);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: scale(1.15);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: var(--radius-full);
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        /* CARROSSEL DE 7 IMAGENS (ABAIXO DO HERO) */
+        .gallery-carousel {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .gallery-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 30px;
+            color: white;
+        }
+
+        .gallery-caption h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .gallery-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: var(--radius-full);
+            background: var(--light-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+        }
+
+        .gallery-arrows {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .gallery-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-full);
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-arrow:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* SEÇÃO DE SERVIÇOS */
+        .services {
+            background: var(--light-gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .service-group {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            height: fit-content;
+        }
+
+        .service-group:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .group-header {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: var(--white);
+            padding: 35px 30px;
+            text-align: center;
+        }
+
+        .group-icon {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+        }
+
+        .group-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .group-description {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .cards-container {
+            padding: 30px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+
+        .service-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            height: 220px;
+            background: var(--light-gray);
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .service-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--secondary);
+        }
+
+        .card-price {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-price span {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .card-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .card-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .card-features i {
+            color: var(--primary);
+            font-size: 0.9rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* SEÇÃO SERVIÇOS ADICIONAIS */
+        .additional-services {
+            background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+        }
+
+        .additional-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .additional-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+
+        .additional-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .additional-image {
+            height: 200px;
+            background: var(--light-gray);
+            overflow: hidden;
+        }
+
+        .additional-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .additional-card:hover .additional-image img {
+            transform: scale(1.1);
+        }
+
+        .additional-content {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .additional-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -55px auto 20px;
+            color: white;
+            font-size: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .additional-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .additional-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .additional-features {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .additional-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .additional-features i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        /* SEÇÃO SERVIÇOS PREMIUM */
+        .premium-services {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-services::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .premium-services .section-title {
+            color: var(--white);
+        }
+
+        .premium-services .section-title::after {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .premium-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-xl);
+            padding: 40px 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-15px);
+            background: rgba(255,255,255,0.15);
+            border-color: var(--primary);
+        }
+
+        .premium-card::before {
+            content: 'PREMIUM';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--primary);
+            color: white;
+            padding: 8px 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .premium-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            background: rgba(255,255,255,0.15);
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .premium-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .premium-card p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .premium-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .premium-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .premium-features i {
+            color: var(--accent);
+        }
+
+        .premium-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .premium-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            width: 100%;
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(227,27,35,0.4);
+        }
+
+        /* SOBRE NÓS */
+        .about {
+            background: var(--white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-top: 10px;
+        }
+
+        .about-image {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* CONTATO */
+        .contact {
+            background: var(--light-gray);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-info {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--secondary);
+        }
+
+        .contact-details {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .contact-details li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+            color: var(--dark);
+        }
+
+        .contact-details i {
+            color: var(--primary);
+            font-size: 1.3rem;
+            width: 30px;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(227,27,35,0.1);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 80px 0 30px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--white);
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(8px);
+        }
+
+        .footer-links i {
+            color: var(--primary-light);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-full);
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 1200px) {
+            .mega-menu { width: 800px; left: -200px; }
+            .hero-title { font-size: 3rem; }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .navbar { padding: 15px 0; }
+            .hero-title { font-size: 2.8rem; }
+            .hero { margin-top: 80px; }
+            .about-grid { grid-template-columns: 1fr; }
+            .mega-menu { display: none; }
+            .mega-menu-premium { display: none; }
+            .gallery-slide img { height: 400px; }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 70px 0; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .hero-cta { flex-direction: column; }
+            .hero-cta .btn { width: 100%; }
+            .section-title { font-size: 2rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .premium-grid { grid-template-columns: 1fr; }
+            .additional-grid { grid-template-columns: 1fr; }
+            .carousel-arrows { display: none; }
+            .gallery-arrows { display: none; }
+            .gallery-slide img { height: 300px; }
+            .whatsapp-float { width: 60px; height: 60px; font-size: 28px; bottom: 20px; right: 20px; }
+        }
+
+        @media (max-width: 576px) {
+            .container { padding: 0 20px; }
+            .hero-title { font-size: 2rem; }
+            .hero-title small { font-size: 1.3rem; }
+            .logo-text { font-size: 1.5rem; }
+            .logo-image { width: 50px; height: 50px; }
+            .section-title { font-size: 1.8rem; }
+            .about-stats { grid-template-columns: 1fr; }
+            .gallery-slide img { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float Button -->
+    <a href="#" class="whatsapp-float" id="whatsappFloat">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- HEADER -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <!-- LOGO COMO IMAGEM -->
+                <div class="logo">
+                    <div class="logo-image">
+                        <!-- COLOQUE AQUI SUA LOGO -->
+                        <img src="/imagens/logo/Logo.svg"  id="logoImage">
+                    </div>
+                    <div class="logo-text">Gráfica Rápida</div>
+                </div>
+
+                <ul class="nav-links">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active">Início</a>
+                    </li>
+                    
+                    <!-- MEGA MENU "TODOS OS SERVIÇOS" -->
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link">
+                            Todos os Serviços <i class="fas fa-chevron-down"></i>
+                        </a>
+                        
+                        <!-- MEGA MENU COMPLETO COM TODOS OS SERVIÇOS DA GRÁFICA -->
+                        <div class="mega-menu">
+                            <div class="mega-menu-grid">
+                                <!-- COLUNA 1: Impressão e Papelaria -->
+                                <div class="mega-menu-column">
+                                    <h4><i class="fas fa-print"></i> Impressão & Papelaria</h4>
+                                    <ul class="mega-menu-links">
+                                        <li><a href="#additional"><i class="fas fa-stamp"></i> Carimbos Personalizados</a></li>
+                                        <li><a href="#additional"><i class="fas fa-file-invoice"></i> Bloco de Fatura</a></li>
+                                        <li><a href="#additional"><i class="fas fa-envelope-open-text"></i> Receituários</a></li>
+                                        <li><a href="#additional"><i class="fas fa-address-book"></i> Livros de Ponto</a></li>
+                                        <li><a href="#additional"><i class="fas fa-file-alt"></i> Folhas Soltas</a></li>
+                                        <li><a href="#additional"><i class="fas fa-scroll"></i> Cartolinas</a></li>
+                                        <li><a href="#additional"><i class="fas fa-print"></i> Impressão de Lonas</a></li>
+                                        <li><a href="#additional"><i class="fas fa-tshirt"></i> Vinil</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- COLUNA 2: Materiais Promocionais -->
+                                <div class="mega-menu-column">
+                                    <h4><i class="fas fa-gift"></i> Promocionais</h4>
+                                    <ul class="mega-menu-links">
+                                        <li><a href="#additional"><i class="fas fa-calendar-alt"></i> Calendários</a></li>
+                                        <li><a href="#additional"><i class="fas fa-scroll"></i> Panfletos</a></li>
+                                        <li><a href="#additional"><i class="fas fa-file"></i> Flyers</a></li>
+                                        <li><a href="#additional"><i class="fas fa-tshirt"></i> Timbragens de T-shirts</a></li>
+                                        <li><a href="#additional"><i class="fas fa-tags"></i> Banner</a></li>
+                                        <li><a href="#additional"><i class="fas fa-image"></i> Cartazes</a></li>
+                                        <li><a href="#additional"><i class="fas fa-newspaper"></i> Folders</a></li>
+                                        <li><a href="#additional"><i class="fas fa-ad"></i> Outdoors</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- COLUNA 3: Convites e Comunicação Visual -->
+                                <div class="mega-menu-column">
+                                    <h4><i class="fas fa-envelope"></i> Convites & Eventos</h4>
+                                    <ul class="mega-menu-links">
+                                        <li><a href="#additional"><i class="fas fa-envelope"></i> Convites Diversos</a></li>
+                                        <li><a href="#additional"><i class="fas fa-hat-wizard"></i> Polos Batas Bonés</a></li>
+                                        <li><a href="#additional"><i class="fas fa-utensils"></i> Cardápios</a></li>
+                                        <li><a href="#addi+tional"><i class="fas fa-lightbulb"></i> Reclames Luminosos</a></li>
+                                        <li><a href="#additional"><i class="fas fa-store-alt"></i> Letreiros</a></li>
+                                        <li><a href="#additional"><i class="fas fa-building"></i> Chapas de Matrículas</a></li>
+                                        <li><a href="#additional"><i class="fas fa-car"></i> Decoração de Viaturas</a></li>
+                                        <li><a href="#additional"><i class="fas fa-tools"></i> E muitos mais...</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <!-- MEGA MENU "SERVIÇOS PREMIUM" -->
+                    <li class="nav-item">
+                        <a href="#premium" class="nav-link">
+                            Serviços Premium <i class="fas fa-chevron-down"></i>
+                        </a>
+                        
+                        <!-- MEGA MENU SERVIÇOS PREMIUM -->
+                        <div class="mega-menu-premium">
+                            <div class="mega-menu-grid">
+                                <!-- COLUNA 1: Serviços Digitais Premium -->
+                                <div class="mega-menu-column">
+                                    <h4><i class="fas fa-laptop-code"></i> Digital Premium</h4>
+                                    <ul class="mega-menu-links">
+                                        <li><a href="#premium"><i class="fas fa-code"></i> Criação de Websites <span class="menu-badge">Premium</span></a></li>
+                                        <li><a href="#premium"><i class="fas fa-cart-shopping"></i> E-commerce Completo <span class="menu-badge">Premium</span></a></li
+                                        <li><a href="#premium"><i class="fas fa-chart-line"></i> Marketing Digital <span class="menu-badge">Premium</span></a></li>
+                                        <li><a href="#premium"><i class="fas fa-search"></i> SEO Avançado <span class="menu-badge">Premium</span></a></li>
+                                        <li><a href="#premium"><i class="fas fa-ad"></i> Landing Page <span class="menu-badge">Premium</span></a></li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- COLUNA 2: Consultoria Premium -->
+                                <div class="mega-menu-column">
+                                    <h4><i class="fas fa-crown"></i> Consultoria Premium</h4>
+                                    <ul class="mega-menu-links">
+                                        <li><a href="#premium"><i class="fas fa-building"></i> Criação de Empresas <span class="menu-badge">Premium</span></a></li>
+                                        <li><a href="#premium"><i class="fas fa-chart-pie"></i> Consultoria de Marca <span class="menu-badge">Premium</span></a></li>
+                                        <li><a href="#premium"><i class="fas fa-bullhorn"></i> Estratégias de Marketing <span class="menu-badge">Premium</span></a></li>
+                                        <li><a href="#premium"><i class="fas fa-file-signature"></i> Identidade Visual <span class="menu-badge">Premium</span></a></li>
+                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">Sobre Nós</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">Contatos</a>
+                    </li>
+
+                    <li class="nav-cta">
+                        <a href="#contact" class="btn btn-nav btn-nav-whatsapp">
+                            <i class="fab fa-whatsapp"></i> Orçamento
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- MOBILE MENU BUTTON -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+
+        <!-- MOBILE NAVIGATION -->
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="logo">
+                    <div class="logo-image">
+                        <img src="" alt="Gráfica Rápida" id="mobileLogoImage">
+                    </div>
+                    <div class="logo-text">Gráfica Rápida</div>
+                </div>
+                <button class="mobile-nav-close" id="mobileMenuClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="mobile-nav-links">
+                <li>
+                    <a href="#home" class="nav-link mobile-nav-link">Início</a>
+                </li>
+                
+                <li>
+                    <div class="nav-link" onclick="toggleMobileSubmenu(this)">
+                        Todos os Serviços <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <ul class="mobile-submenu">
+                        <li><a href="#additional"><i class="fas fa-stamp"></i> Carimbos Personalizados</a></li>
+                        <li><a href="#additional"><i class="fas fa-file-invoice"></i> Bloco de Fatura</a></li>
+                        <li><a href="#additional"><i class="fas fa-envelope"></i> Convites Diversos</a></li>
+                        <li><a href="#additional"><i class="fas fa-hat-wizard"></i> Polos Batas Boés</a></li>
+                        <li><a href="#additional"><i class="fas fa-lightbulb"></i> Reclames Luminosos</a></li>
+                        <li><a href="#additional"><i class="fas fa-address-book"></i> Livros de Ponto</a></li>
+                        <li><a href="#additional"><i class="fas fa-envelope-open-text"></i> Receituários</a></li>
+                        <li><a href="#additional"><i class="fas fa-utensils"></i> Cardápios</a5 ></li>
+                        <li><a href="#additional"><i class="fas fa-calendar-alt"></i> Calendários</a></li>
+                        <li><a href="#additional"><i class="fas fa-scroll"></i> Panfletos</a></li>
+                        <li><a href="#additional"><i class="fas fa-file"></i> Flyers</a></li>
+                        <li><a href="#additional"><i class="fas fa-tshirt"></i> Timbragens de T-shirts</a></li>
+                        <li><a href="#additional"><i class="fas fa-print"></i> Impressão de Lonas</a></li>
+                        <li><a href="#additional"><i class="fas fa-tshirt"></i> Vinil</a></li>
+                        <li><a href="#additional"><i class="fas fa-scroll"></i> Cartolinas</a></li>
+                        <li><a href="#additional"><i class="fas fa-file-alt"></i> Folhas Soltas</a></li>
+                        <li><a href="#additional"><i class="fas fa-tags"></i> Banner</a></li>
+                        <li><a href="#additional"><i class="fas fa-tools"></i> E muitos mais...</a></li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="nav-link" onclick="toggleMobileSubmenu(this)">
+                        Serviços Premium <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <ul class="mobile-submenu">
+                        <li><a href="#premium"><i class="fas fa-code"></i> Criação de Websites</a></li>
+                        <li><a href="#premium"><i class="fas fa-cart-shopping"></i> E-commerce</a></li>
+                        <li><a href="#premium"><i class="fas fa-chart-line"></i> Marketing Digital</a></li>
+                        <li><a href="#premium"><i class="fas fa-search"></i> SEO</a></li>
+                        <li><a href="#premium"><i class="fas fa-building"></i> Criação de Empresas</a></li>
+                        <li><a href="#premium"><i class="fas fa-chart-pie"></i> Consultoria de Marca</a></li>
+                        <li><a href="#premium"><i class="fas fa-file-signature"></i> Identidade Visual</a></li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="#about" class="nav-link mobile-nav-link">Sobre Nós</a>
+                </li>
+                
+                <li>
+                    <a href="#contact" class="nav-link mobile-nav-link">Contatos</a>
+                </li>
+            </ul>
+
+            <div class="mobile-nav-cta">
+                <a href="#contact" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                </a>
+                <a href="#contact" class="btn btn-outline">
+                    <i class="fas fa-phone-alt"></i> Ligar Agora
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION COM CAROUSEL PRINCIPAL -->
+    <section class="hero" id="home">
+        <div class="hero-carousel">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- IMAGEM 1 -->
+                <div class="carousel-slide active">
+                    <img src="/imagens/carrocel/slid 1.svg" alt="Slide 1" id="heroImage1">
+                    <div class="carousel-overlay"></div>
+                </div>
+                <!-- IMAGEM 2 -->
+                <div class="carousel-slide">
+                    <img src="/imagens/carrocel/slider 2.svg" alt="Slide 2" id="heroImage2">
+                    <div class="carousel-overlay"></div>
+                </div>
+                <!-- IMAGEM 3 -->
+                <div class="carousel-slide">
+                    <img src="/imagens/carrocel/slider3.svg" alt="Slide 3" id="heroImage3">
+                    <div class="carousel-overlay"></div>
+                </div>
+            </div>
+
+            <div class="carousel-arrows">
+                <button class="carousel-arrow" id="prevArrow">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-arrow" id="nextArrow">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="carousel-dots" id="carouselDots">
+                <div class="carousel-dot active" data-slide="0"></div>
+                <div class="carousel-dot" data-slide="1"></div>
+                <div class="carousel-dot" data-slide="2"></div>
+            </div>
+        </div>
+     
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Bem-vindo à Gráfica Rápida!
+                    <small>Transformamos suas ideias em soluções gráficas</small>
+                </h1>
+                <p class="hero-subtitle">Design, impressão digital, comunicação visual, brindes personalizados, serviços premium e muito mais. Qualidade máxima para sua marca e negócio.</p>
+                <div class="hero-cta">
+                    <a href="#services" class="btn btn-primary">
+                        <i class="fas fa-eye"></i> Conhecer Serviços
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-comments"></i> Fale com Especialista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARROSSEL DE 7 IMAGENS (ABAIXO DO HERO) -->
+    <section class="gallery-carousel">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nossos Trabalhos</h2>
+                <p class="section-subtitle">Confira alguns dos nossos projetos realizados com excelência e criatividade.</p>
+            </div>
+
+            <div class="gallery-container">
+                <div class="gallery-track" id="galleryTrack">
+                    <!-- IMAGEM 1 -->
+                    <div class="gallery-slide">
+                        <img src="/imagens/2carrocel/eeeee.png"Trabalho 1" id="galleryImg1">
+                        <div class="gallery-caption">
+                            <h3>Personalização</h3>
+                            <p>Chávenas, chapéus, diversos... </p>
+                        </div>
+                    </div>
+                    <!-- IMAGEM 2 -->
+                    <div class="gallery-slide">
+                        <img src="/imagens/2carrocel/rrrrr.png" alt="Trabalho 2" id="galleryImg2">
+                        <div class="gallery-caption">
+                            <h3>Criação de Websites</h3>
+                            <p> Responsividade, Busca Rápida, </p>
+                        </div>
+                    </div>
+                    <!-- IMAGEM 3 -->
+                    <div class="gallery-slide">
+                        <img src="/imagens/2carrocel/CARTAO DE VISITAS.png" alt="Trabalho 3" id="galleryImg3">
+                        <div class="gallery-caption">
+                            <h3>Cartões de Visita</h3>
+                            <p>Acabamento premium e verniz UV</p>
+                        </div>
+                    </div>
+                   
+                    <!-- IMAGEM 5 -->
+                    <div class="gallery-slide">
+                        <img src="/imagens/2carrocel/slider 1.png
+                        " alt="Trabalho 5" id="galleryImg5">
+                        <div class="gallery-caption">
+                            <h3>Timbragem</h3>
+                            <p>DTF, sublimação e borda</p>
+                        </div>
+                    </div>
+                    <!-- IMAGEM 6 -->
+                    <div class="gallery-slide">
+                        <img src="/imagens/2carrocel/dIAGRAMAÇÃO.png" alt="Trabalho 6" id="galleryImg6">
+                        <div class="gallery-caption">
+                            <h3>Diagramação de Livros</h3>
+                            <p>Capas e ilustrações
+
+                            </p>
+                        </div>
+                    </div>
+                    <!-- IMAGEM 7 -->
+                    <div class="gallery-slide">
+                        <img src="/imagens/2carrocel/identidade visual.png" alt="Trabalho 7" id="galleryImg7">
+                        <div class="gallery-caption">
+                            <h3>Identidade Visual </h3>
+                            <p>Projetos completos para sua marca</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-arrows">
+                    <button class="gallery-arrow" id="galleryPrev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="gallery-arrow" id="galleryNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="gallery-nav" id="galleryNav">
+                <div class="gallery-dot active" data-slide="0"></div>
+                <div class="gallery-dot" data-slide="1"></div>
+                <div class="gallery-dot" data-slide="2"></div>
+                <div class="gallery-dot" data-slide="3"></div>
+                <div class="gallery-dot" data-slide="4"></div>
+                <div class="gallery-dot" data-slide="5"></div>
+                <div class="gallery-dot" data-slide="6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE SERVIÇOS GRÁFICOS PRINCIPAIS -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nossos Serviços Principais</h2>
+                <p class="section-subtitle">Soluções completas em comunicação visual, design e impressão digital com a mais alta qualidade do mercado.</p>
+            </div>
+
+            <div class="services-grid">
+                <!-- GRUPO 1: DESIGN GRÁFICO -->
+                <div class="service-group">
+                    <div class="group-header">
+                        <div class="group-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="group-title">Design Gráfico</h3>
+                        <p class="group-description">Criação de identidade visual e materiais</p>
+                    </div>
+                    <div class="cards-container">
+                        <div class="service-card">
+                            <div class="card-image">
+                                <img src="/imagens/cards/logoti+pos.png"Logotipos" id="serviceImg1">
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">Logotipos Profissionais</h4>
+                                <div class="card-price">70.000 Kzs <span>à vista</span></div>
+                                <p class="card-description">Identidade visual exclusiva para sua marca com conceito único.</p>
+                                <ul class="card-features">
+                                    <li><i class="fas fa-check"></i> 3 opções de conceito</li>
+                                    <li><i class="fas fa-check"></i> Manual de aplicação</li>
+                                    <li><i class="fas fa-check"></i> Arquivos em vetor</li>
+                                </ul>
+                                <button class="btn btn-whatsapp" data-service="Logotipos Profissionais">
+                                    <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                                </button>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="card-image">
+                                <img src="/imagens/cards/papelaria.png"Papelaria" id="serviceImg2">
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">Papelaria Corporativa</h4>
+                                <div class="card-price"> ORÇAMENTO <span>kit completo</span></div>
+                                <p class="card-description">Comunicação visual profissional para sua empresa.</p>
+                                <ul class="card-features">
+                                    <li><i class="fas fa-check"></i> Cartão de visita</li>
+                                    <li><i class="fas fa-check"></i> Papel timbrado</li>
+                                    <li><i class="fas fa-check"></i> Envelope personalizado</li>
+                                </ul>
+                                <button class="btn btn-whatsapp" data-service="Papelaria Corporativa">
+                                    <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRUPO 2: IMPRESSÃO DIGITAL -->
+                <div class="service-group">
+                    <div class="group-header">
+                        <div class="group-icon">
+                            <i class="fas fa-print"></i>
+                        </div>
+                        <h3 class="group-title">Impressão Digital</h3>
+                        <p class="group-description">Alta qualidade em impressão</p>
+                    </div>
+                    <div class="cards-container">
+                        <div class="service-card">
+                            <div class="card-image">
+                                <img src="/imagens/cards/cartao de visitad.png" id="serviceImg3">
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">Cartões de Visita</h4>
+                                <div class="card-price">250 Kzs  <span>1 unidade</span></div>
+                                <p class="card-description">Cartões premium com acabamento especial.</p>
+                                <ul class="card-features">
+                                    <li><i class="fas fa-check"></i> Papel couché 300g</li>
+                                    <li><i class="fas fa-check"></i> Verniz UV localizado</li>
+                                    <li><i class="fas fa-check"></i> Entrega 24h</li>
+                                </ul>
+                                <button class="btn btn-whatsapp" data-service="Cartões de Visita">
+                                    <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                                </button>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="card-image">
+                                <img src="/imagens/cards/FLYYER E PANFLETOS.png" alt="Flyers" id="serviceImg4">
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">Flyers e Panfletos</h4>
+                                <div class="card-price">15.900 Kzs <span>500 unidades</span></div>
+                                <p class="card-description">Material promocional de alto impacto.</p>
+                                <ul class="card-features">
+                                    <li><i class="fas fa-check"></i> Cores vibrantes</li>
+                                    <li><i class="fas fa-check"></i> Dobras especiais</li>
+                                    <li><i class="fas fa-check"></i> Acabamento premium</li>
+                                </ul>
+                                <button class="btn btn-whatsapp" data-service="Flyers e Panfletos">
+                                    <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRUPO 3: BRINDES PERSONALIZADOS -->
+                <div class="service-group">
+                    <div class="group-header">
+                        <div class="group-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h3 class="group-title">Brindes Personalizados</h3>
+                        <p class="group-description">Produtos exclusivos para sua marca</p>
+                    </div>
+                    <div class="cards-container">
+                        <div class="service-card">
+                            <div class="card-image">
+                                <img src="/imagens/cards/canetas.png"Canetas" id="serviceImg5">
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">Canetas Personalizadas</h4>
+                                <div class="card-price">950 Kzs <span>unidade</span></div>
+                                <p class="card-description">Brinde corporativo de alto padrão.</p>
+                                <ul class="card-features">
+                                    <li><i class="fas fa-check"></i> Mínimo 50 unidades</li>
+                                    <li><i class="fas fa-check"></i> 5 cores disponíveis</li>
+                                    <li><i class="fas fa-check"></i> Gravação em silk</li>
+                                </ul>
+                                <button class="btn btn-whatsapp" data-service="Canetas Personalizadas">
+                                    <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                                </button>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="card-image">
+                                <img src="/imagens/cards/1234.png" alt="Camisetas" id="serviceImg6">
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">Camisetas Personalizadas</h4>
+                                <div class="card-price">4.900 Kzs <span>unidade</span></div>
+                                <p class="card-description">Uniforme e brindes de qualidade.</p>
+                                <ul class="card-features">
+                                    <li><i class="fas fa-check"></i> Tecido 100% algodão</li>
+                                    <li><i class="fas fa-check"></i> Silk digital</li>
+                                    <li><i class="fas fa-check"></i> 15 cores disponíveis</li>
+                                </ul>
+                                <button class="btn btn-whatsapp" data-service="Camisetas Personalizadas">
+                                    <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE SERVIÇOS ADICIONAIS (COM CARDS PARA TODOS OS SERVIÇOS) -->
+    <section class="additional-services" id="additional">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Serviços Adicionais</h2>
+                <p class="section-subtitle">Conheça nossa ampla variedade de serviços especializados para atender todas as suas necessidades gráficas.</p>
+            </div>
+
+            <div class="additional-grid">
+                <!-- CARD 1: Carimbos Personalizados -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/carimbos.png" alt="Carimbos" id="additionalImg1">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-stamp"></i>
+                        </div>
+                        <h3>Carimbos Personalizados</h3>
+                        <p>Carimbos automáticos, de madeira e digitais para sua empresa.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Diversos tamanhos</li>
+                            <li><i class="fas fa-check"></i> Até 8 linhas de texto</li>
+                            <li><i class="fas fa-check"></i> Tinteiro incluso</li>
+                        </ul>
+                        <div class="card-price">A partir de 10.000 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Carimbos Personalizados">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 2: Bloco de Fatura -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/2bloco de fa.png"additionalImg2">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <h3>Bloco de Fatura</h3>
+                        <p>Blocos de fatura, recibos e notas personalizados para seu negócio.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Numerados ou não</li>
+                            <li><i class="fas fa-check"></i> Carbonados</li>
+                            <li><i class="fas fa-check"></i> Personalizados com logo</li>
+                        </ul>
+                        <div class="card-price">A partir de 3.500 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Bloco de Fatura">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Convites Diversos -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/convite personali.png" alt="Convites" id="additionalImg3">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Convites Diversos</h3>
+                        <p>Convites para casamento, aniversário, formatura e eventos corporativos.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Design exclusivo</li>
+                            <li><i class="fas fa-check"></i> Acabamento especial</li>
+                            <li><i class="fas fa-check"></i> Envelopes inclusos</li>
+                        </ul>
+                        <div class="card-price">A partir de 450 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Convites Diversos">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 4: Polos Batas Boés -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/polos bones.png" id="additionalImg4">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-hat-wizard"></i>
+                        </div>
+                        <h3>Polos Batas Boés</h3>
+                        <p>Personalização de polos e batas para profissionais e empresas.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Silk ou bordado</li>
+                            <li><i class="fas fa-check"></i> Tecidos de qualidade</li>
+                            <li><i class="fas fa-check"></i> Cores variadas</li>
+                        </ul>
+                        <div class="card-price">A partir de 4.500 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Polos Batas Boés">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 5: Reclames Luminosos -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/reclames.png"Reclames Luminosos" id="additionalImg5">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Reclames Luminosos</h3>
+                        <p>Letreiros luminosos em LED para destacar sua marca dia e noite.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> LED de baixo consumo</li>
+                            <li><i class="fas fa-check"></i> Cores personalizáveis</li>
+                            <li><i class="fas fa-check"></i> Instalação incluída</li>
+                        </ul>
+                        <div class="card-price">100.000 kZS</div>
+                        <button class="btn btn-whatsapp" data-service="Reclames Luminosos">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 6: Livros de Ponto -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/livro de Pontos.png"Livros de Ponto" id="additionalImg6">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-address-book"></i>
+                        </div>
+                        <h3>Livros de Ponto</h3>
+                        <p>Livros de ponto personalizados para controle de funcionários.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Capa dura</li>
+                            <li><i class="fas fa-check"></i> Páginas numeradas</li>
+                            <li><i class="fas fa-check"></i> Personalizados com logo</li>
+                        </ul>
+                        <div class="card-price">A partir de 6.500 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Livros de Ponto">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 7: Receituários -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/receituario.png"Receituários" id="additionalImg7">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-prescription"></i>
+                        </div>
+                        <h3>Receituários</h3>
+                        <p>Receituários personalizados para médicos, dentistas e profissionais de saúde.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Formato padrão</li>
+                            <li><i class="fas fa-check"></i> Com ou sem numeração</li>
+                            <li><i class="fas fa-check"></i> Personalizados</li>
+                        </ul>
+                        <div class="card-price">A partir de 3.500 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Receituários">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 8: Cardápios -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/5cardapio.png" id="additionalImg8">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Cardápios</h3>
+                        <p>Cardápios personalizados para restaurantes, bares e lanchonetes.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Design exclusivo</li>
+                            <li><i class="fas fa-check"></i> Papel couchê</li>
+                            <li><i class="fas fa-check"></i> Plastificado</li>
+                        </ul>
+                        <div class="card-price">A partir de 4.500 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Cardápios">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 9: Calendários -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/calendario.png"Calendários" id="additionalImg9">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Calendários</h3>
+                        <p>Calendários de mesa, parede e agenda personalizados para sua empresa.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Vários formatos</li>
+                            <li><i class="fas fa-check"></i> Com logo da empresa</li>
+                            <li><i class="fas fa-check"></i> Tiragem sob consulta</li>
+                        </ul>
+                        <div class="card-price">Sob consulta</div>
+                        <button class="btn btn-whatsapp" data-service="Calendários">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 10: Panfletos e Flyers -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/FLYYER E PANFLETOS.png" alt="Panfletos" id="additionalImg10">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <h3>Panfletos e Flyers</h3>
+                        <p>Materiais promocionais de alto impacto para divulgar sua marca.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Diversos formatos</li>
+                            <li><i class="fas fa-check"></i> Papel couchê</li>
+                            <li><i class="fas fa-check"></i> Acabamento premium</li>
+                        </ul>
+                        <div class="card-price">A partir de 15.900 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Panfletos e Flyers">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 11: Timbragens de T-shirts -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/timbragem.png"Timbragens" id="additionalImg11">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h3>Timbragens de T-shirts</h3>
+                        <p>Personalização de camisetas com silk digital de alta qualidade.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Silk digital</li>
+                            <li><i class="fas fa-check"></i> Até 4 cores</li>
+                            <li><i class="fas fa-check"></i> Mínimo 10 peças</li>
+                        </ul>
+                        <div class="card-price">A partir de 3.900 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Tombragens de T-shirts">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 12: Impressão de Lonas e Vinil -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/lonas e vinil.png"Lonas e Vinil" id="additionalImg12">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-print"></i>
+                        </div>
+                        <h3>Impressão de Lonas e Vinil</h3>
+                        <p>Impressão de lonas, vinil adesivo e banners para comunicação visual.</p>
+                          <ul class="additional-features">
+                            <li><i class="fas fa-check"></i>Alta resolução</li>
+                            <lvi><i class="fas fa-check"></i>      Resistente às intempéries</li>
+                            <li><i class="fas fa-check"></i>Diversos tamanhos</li>
+                        </ul>
+                        <div class="card-price">Apartir de 5.000 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Impressão de Lonas e Vinil">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 13: Cartolinas e Folhas Soltas -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/cartolinas.png"Cartolinas" id="additionalImg13">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <h3>Cartolinas e Folhas Soltas</h3>
+                        <p>Venda de cartolinas, papel A4, sulfite e folhas soltas para diversos fins.</p>
+                        <ul class="additional-features">
+                            <li><i class="fas fa-check"></i> Diversas cores</li>
+                            <li><i class="fas fa-check"></i> Gramaturas variadas</li>
+                            <li><i class="fas fa-check"></i> Venda por unidade</li>
+                        </ul>
+                        <div class="card-price">A partir de 150 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Cartolinas e Folhas Soltas">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 14: Banner -->
+                <div class="additional-card">
+                    <div class="additional-image">
+                        <img src="/imagens/cards/Banner.png"Banner" id="additionalImg14">
+                    </div>
+                    <div class="additional-content">
+                        <div class="additional-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h3>Banner</h3>
+                        <p>Banners promocionais para eventos, feiras e divulgação em geral.</p>
+                        <ul class="additional-features">
+                <li><i class="fas fa-check"></i> Lona ou vinil</li>
+                            <li><i class="fas fa-check"></i>Com a Criação </li>
+                            <li><i class="fas fa-check"></i> Impressão digital</li>
+                        </ul>
+                        <div class="card-price">A partir de 12.900 Kzs</div>
+                        <button class="btn btn-whatsapp" data-service="Banner">
+                            <i class="fab fa-whatsapp"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+
+    </section>
+
+    <!-- SEÇÃO DE SERVIÇOS PREMIUM -->
+    <section class="premium-services" id="premium">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Serviços Premium</h2>
+                <p class="section-subtitle">Soluções de alto padrão para empresas que buscam excelência e resultados extraordinários.</p>
+            </div>
+
+            <div class="premium-grid">
+                <!-- CARD PREMIUM 1 -->
+                <div class="premium-card">
+                    <div class="premium-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Criação de Websites</h3>
+                    <p>Sites institucionais, lojas virtuais e landing pages com design exclusivo.</p>
+                    <ul class="premium-features">
+                        <li><i class="fas fa-check"></i> Design responsivo</li>
+                        <li><i class="fas fa-check"></i> Otimização SEO</li>
+                        <li><i class="fas fa-check"></i> Painel administrativo</li>
+                        <li><i class="fas fa-check"></i> Hospedagem grátis 1 ano</li>
+                        <li><i class="fas fa-check"></i> Certificado SSL</li>
+                    </ul>
+                    <div class="premium-price">70.000 Kzs</div>
+                    <button class="btn-premium" data-service="Criação de Websites">
+                        <i class="fab fa-whatsapp"></i> Solicitar Proposta
+                    </button>
+                </div>
+
+                <!-- CARD PREMIUM 2 -->
+                <div class="premium-card">
+                    <div class="premium-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Criação de Empresas</h3>
+                    <p>Consultoria completa para abertura e estruturação da sua empresa.</p>
+                    <ul class="premium-features">
+                        <li><i class="fas fa-check"></i> Registro de marca</li>
+                        <li><i class="fas fa-check"></i> Elaboração de contrato</li>
+                        <li><i class="fas fa-check"></i> Planejamento estratégico</li>
+                        <li><i class="fas fa-check"></i> Consultoria fiscal</li>
+                        <li><i class="fas fa-check"></i> Plano de negócios</li>
+                    </ul>
+                    <div class="premium-price">249.000 Kzs</div>
+                    <button class="btn-premium" data-service="Criação de Empresas">
+                        <i class="fab fa-whatsapp"></i> Solicitar Proposta
+                    </button>
+                </div>
+
+                <!-- CARD PREMIUM 3 -->
+                <div class="premium-card">
+                    <div class="premium-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Marketing Digital</h3>
+                    <p>Estratégias avançadas para alavancar seus resultados online.</p>
+                    <ul class="premium-features">
+                        <li><i class="fas fa-check"></i> Gestão de redes sociais</li>
+                        <li><i class="fas fa-check"></i> Google Ads</li>
+                        <li><i class="fas fa-check"></i> Facebook/Instagram Ads</li>
+                        <li><i class="fas fa-check"></i> E-mail marketing</li>
+                        <li><i class="fas fa-check"></i> Relatórios mensais</li>
+                    </ul>
+                    <div class="premium-price">150.000 Kzs/mês</div>
+                    <button class="btn-premium" data-service="Marketing Digital">
+                        <i class="fab fa-whatsapp"></i> Solicitar Proposta
+                    </button>
+                </div>
+
+                <!-- CARD PREMIUM 4 -->
+                <div class="premium-card">
+                    <div class="premium-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Identidade Visual </h3>
+                    <p>Projeto completo de branding e identidade visual para posicionar sua marca.</p>
+                    <ul class="premium-features">
+                        <li><i class="fas fa-check"></i> Pesquisa de marca</li>
+                        <li><i class="fas fa-check"></i> Logo exclusivo</li>
+                        <li><i class="fas fa-check"></i> Manual completo</li>
+                        <li><i class="fas fa-check"></i> Aplicações diversas</li>
+                        <li><i class="fas fa-check"></i> Consultoria de marca</li>
+                    </ul>
+                    <div class="premium-price">150.000 Kzs</div>
+                    <button class="btn-premium" data-service="Identidade Visual Premium">
+                        <i class="fab fa-whatsapp"></i> Solicitar Proposta
+                    </button>
+                </div>
+
+                <!-- CARD PREMIUM 5 -->
+                <div class="premium-card">
+                    <div class="premium-icon">
+                        <i class="fas fa-cart-shopping"></i>
+                    </div>
+                    <h3>E-commerce Completo</h3>
+                    <p>Loja virtual profissional com todas as funcionalidades para vender online.</p>
+                    <ul class="premium-features">
+                        <li><i class="fas fa-check"></i> Catálogo de produtos</li>
+                        <li><i class="fas fa-check"></i> Carrinho de compras</li>
+                        <li><i class="fas fa-check"></i> Integração com pagamentos</li>
+                        <li><i class="fas fa-check"></i> Cálculo de frete</li>
+                        <li><i class="fas fa-check"></i> Gestão de pedidos</li>
+                    </ul>
+                    <div class="premium-price">299.000 Kzs</div>
+                    <button class="btn-premium" data-service="E-commerce Completo">
+                        <i class="fab fa-whatsapp"></i> Solicitar Proposta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO SOBRE NÓS -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>Sobre a Gráfica Rápida</h2>
+                    <p>Há mais de 10 anos transformando ideias em soluções gráficas de excelência. Nossa missão é oferecer serviços de alta qualidade com criatividade, inovação e comprometimento.</p>
+                    <p>Contamos com uma equipe altamente especializada e equipamentos de última geração para garantir o melhor resultado em cada projeto. Do design à impressão, do digital ao físico, entregamos sempre o máximo em qualidade.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Anos de experiência</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">2.500+</div>
+                            <div class="stat-label">Clientes atendidos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5.000+</div>
+                            <div class="stat-label">Projetos entregues</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+       
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO CONTATO -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Fale Conosco</h2>
+                <p class="section-subtitle">Estamos prontos para atender você. Solicite um orçamento ou tire suas dúvidas.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informações de Contato</h3>
+                    <ul class="contact-details">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Endereço</strong><br>
+                                Edifício Ango Hotel<br>
+                                Cidade Baixa - Huambo
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Telefone</strong><br>
+                                (+244) 928 603 535
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>E-mail</strong><br>
+                                graficarapida@gmail.com
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Horário</strong><br>
+                                Segunda a Sexta: 8h às 17h<br>
+                                Sábado: 8h às 12h
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Envie sua Mensagem</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Seu nome completo" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Seu e-mail" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="Seu WhatsApp" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control">
+                                <option value="">Selecione um serviço</option>
+                                <option>Carimbos Personalizados</option>
+                                <option>Bloco de Fatura</option>
+                                <option>Convites Diversos</option>
+                                <option>Polos Batas Boés</option>
+                                <option>Reclames Luminosos</option>
+                                <option>Livros de Ponto</option>
+                                <option>Receituários</option>
+                                <option>Cardápios</option>
+                                <option>Calendários</option>
+                                <option>Panfletos</option>
+                                <option>Flyers</option>
+                                <option>Tombragens de T-shirts</option>
+                                <option>Impressão de Lonas</option>
+                                <option>Vinil</option>
+                                <option>Cartolinas</option>
+                                <option>Folhas Soltas</option>
+                                <option>Banner</option>
+                                <option>Criação de Websites</option>
+                                <option>Criação de Empresas</option>
+                                <option>Marketing Digital</option>
+                                <option>Identidade Visual Premium</option>
+                                <option>E-commerce</option>
+                                <option>Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Descreva seu projeto" rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fab fa-whatsapp"></i> Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Gráfica Rápida</h4>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 25px;">Excelência em soluções gráficas e serviços premium. Transformamos suas ideias em realidade.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Serviços</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Design Gráfico</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Impressão Digital</a></li>
+                        <li><a href="#additional"><i class="fas fa-chevron-right"></i> Serviços Adicionais</a></li>
+                        <li><a href="#premium"><i class="fas fa-chevron-right"></i> Serviços Premium</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Links Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Início</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Serviços</a></li>
+                        <li><a href="#additional"><i class="fas fa-chevron-right"></i> Todos os Serviços</a></li>
+                        <li><a href="#premium"><i class="fas fa-chevron-right"></i> Premium</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> Sobre Nós</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Atendimento</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +244 928 603 535</li>
+                        <li><i class="fas fa-envelope"></i> graficarapida@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Seg-Sex: 8h-17h</li>
+                        <li><i class="fas fa-clock"></i> Sáb: 8h-12h</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Gráfica Rápida - Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // CONFIGURAÇÃO DO WHATSAPP
+        const whatsappNumber = "244928603535";
+        const defaultMessage = "Olá! Gostaria de solicitar um orçamento para: ";
+
+        // FUNÇÃO PARA ENVIAR WHATSAPP
+        function sendWhatsAppMessage(serviceName) {
+            const message = encodeURIComponent(defaultMessage + serviceName);
+            const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+            window.open(url, '_blank');
+        }
+
+        // BOTÕES DE WHATSAPP
+        document.querySelectorAll('.btn-whatsapp, .btn-premium').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const serviceName = this.getAttribute('data-service') || "serviços da gráfica";
+                sendWhatsAppMessage(serviceName);
+            });
+        });
+
+        // BOTÃO WHATSAPP FLUTUANTE
+        document.getElementById('whatsappFloat').addEventListener('click', function(e) {
+            e.preventDefault();
+            sendWhatsAppMessage("serviços da gráfica");
+        });
+
+        // MOBILE MENU
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        const mobileNav = document.getElementById('mobileNav');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        mobileMenuClose.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // FECHAR MENU MOBILE AO CLICAR EM LINK
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // SUBMENU MOBILE
+        window.toggleMobileSubmenu = function(element) {
+            const submenu = element.nextElementSibling;
+            submenu.classList.toggle('active');
+            const icon = element.querySelector('i');
+            if (icon) {
+                icon.style.transform = submenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        };
+
+        // HERO CAROUSEL
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevArrow = document.getElementById('prevArrow');
+        const nextArrow = document.getElementById('nextArrow');
+
+        function updateCarousel() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        if (nextArrow && prevArrow) {
+            nextArrow.addEventListener('click', nextSlide);
+            prevArrow.addEventListener('click', prevSlide);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+            });
+        });
+
+        // AUTO SLIDE
+        let carouselInterval = setInterval(nextSlide, 5000);
+
+        const carouselContainer = document.querySelector('.hero-carousel');
+        if (carouselContainer) {
+            carouselContainer.addEventListener('mouseenter', () => {
+                clearInterval(carouselInterval);
+            });
+            carouselContainer.addEventListener('mouseleave', () => {
+                carouselInterval = setInterval(nextSlide, 5000);
+            });
+        }
+
+        // GALLERY CAROUSEL (7 IMAGENS)
+        let gallerySlide = 0;
+        const gallerySlides = document.querySelectorAll('.gallery-slide');
+        const galleryDots = document.querySelectorAll('.gallery-dot');
+        const galleryPrev = document.getElementById('galleryPrev');
+        const galleryNext = document.getElementById('galleryNext');
+        const galleryTrack = document.getElementById('galleryTrack');
+
+        function updateGallery() {
+            if (galleryTrack) {
+                galleryTrack.style.transform = `translateX(-${gallerySlide * 100}%)`;
+            }
+            galleryDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === gallerySlide);
+            });
+        }
+
+        function nextGallery() {
+            gallerySlide = (gallerySlide + 1) % gallerySlides.length;
+            updateGallery();
+        }
+
+        function prevGallery() {
+            gallerySlide = (gallerySlide - 1 + gallerySlides.length) % gallerySlides.length;
+            updateGallery();
+        }
+
+        if (galleryNext && galleryPrev) {
+            galleryNext.addEventListener('click', nextGallery);
+            galleryPrev.addEventListener('click', prevGallery);
+        }
+
+        galleryDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                gallerySlide = index;
+                updateGallery();
+            });
+        });
+
+        // AUTO SLIDE PARA GALERIA
+        let galleryInterval = setInterval(nextGallery, 5000);
+
+        const galleryContainer = document.querySelector('.gallery-container');
+        if (galleryContainer) {
+            galleryContainer.addEventListener('mouseenter', () => {
+                clearInterval(galleryInterval);
+            });
+            galleryContainer.addEventListener('mouseleave', () => {
+                galleryInterval = setInterval(nextGallery, 5000);
+            });
+        }
+
+        // ATUALIZAR LINK ATIVO NO SCROLL
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function updateActiveLink() {
+            let current = '';
+            const scrollPosition = window.scrollY + 200;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href && href.includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        window.addEventListener('load', updateActiveLink);
+
+        // FORMULÁRIO DE CONTATO
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendWhatsAppMessage("contato via formulário");
+            });
+        }
+
+        // INSTRUÇÕES PARA SUBSTITUIR IMAGENS
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎯 PONTOS PARA SUBSTITUIR SUAS IMAGENS:');
+            console.log('');
+            console.log('1️⃣ LOGO (60x60px):');
+            console.log('   - #logoImage, #mobileLogoImage');
+            console.log('');
+            console.log('2️⃣ HERO CAROUSEL (1920x1080px):');
+            console.log('   - #heroImage1, #heroImage2, #heroImage3');
+            console.log('');
+            console.log('3️⃣ GALLERY CAROUSEL (1200x500px):');
+            console.log('   - #galleryImg1 até #galleryImg7');
+            console.log('');
+            console.log('4️⃣ SERVIÇOS PRINCIPAIS (600x400px):');
+            console.log('   - #serviceImg1 até #serviceImg6');
+            console.log('');
+            console.log('5️⃣ SERVIÇOS ADICIONAIS (400x300px):');
+            console.log('   - #additionalImg1 até #additionalImg15');
+            console.log('');
+            console.log('6️⃣ SOBRE NÓS (600x500px):');
+            console.log('   - #aboutImage');
+        });
+    </script>
+</body>
+</html>
